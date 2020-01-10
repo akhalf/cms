@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Traits\ImageUploadTrait;
 
 class PostController extends Controller
 {
+    use ImageUploadTrait;
+    public $post;
+
+    public function __construct(Post $post)
+    {
+        $this->post = $post;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = $this->post::with('user:id,name')->approved()->paginate(5);
+
+        return view('index', compact('posts'));
     }
 
     /**
@@ -24,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
@@ -35,7 +46,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('image'))
+            $image_name = $this->uploadImage($request->image);
+
+        $request->user()->posts()->create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'category_id' => $request->category_id,
+            'image_path' => $image_name ?? 'default.jpg',
+        ]);
+        return back()->with('success', 'تم إضافة المنشور');
+
+        // to return text from lang file using trans()
+        //return back()->with('success', trans('alerts.success');
     }
 
     /**
@@ -46,7 +69,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post.show',compact('post'));
     }
 
     /**
@@ -57,7 +80,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('post.edit', compact('post'));
     }
 
     /**
@@ -69,7 +92,24 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if ($request->hasFile('image')){
+            $image_name = $this->uploadImage($request->image);
+            $post->update([
+                'title' => $request->title,
+                'body' => $request->body,
+                'category_id' => $request->category_id,
+                'image_path' => $image_name ?? 'default.jpg',
+            ]);
+        }
+        else{
+            $post->update([
+                'title' => $request->title,
+                'body' => $request->body,
+                'category_id' => $request->category_id,
+            ]);
+        }
+
+        return back()->with('success', 'تم تعديل المنشور');
     }
 
     /**
@@ -81,5 +121,20 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function getByCategory($id)
+    {
+        $posts = $this->post::with('user:id,name')->whereCategory_id($id)->approved()->paginate(5);
+
+        return view('index', compact('posts'));
+
+    }
+
+    public function search(Request $request)
+    {
+        $posts = $this->post::where('body', 'LIKE', '%'. $request->keyword .'%')->with('user:id,name')->approved()->paginate(5);
+
+        return view('index', compact('posts'));
     }
 }

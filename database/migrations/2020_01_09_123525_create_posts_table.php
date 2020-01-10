@@ -17,8 +17,8 @@ class CreatePostsTable extends Migration
             $table->Increments('id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('text');
-            $table->string('image_path');
+            $table->text('body');
+            $table->string('image_path')->nullable();
             $table->integer('user_id')->unsigned();
             $table->boolean('approved')->default(false);
             $table->tinyInteger('category_id')->unsigned();

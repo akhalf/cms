@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'PostController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('{id}-{slug}', 'postController@getByCategory')->name('category');
+
+
+Route::resource('post', 'PostController')->except(['index']);
+
+
+Route::post('search','PostController@search')->name('search');

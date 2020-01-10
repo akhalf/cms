@@ -5,11 +5,11 @@
         <h5 class="card-header">التصنيفات</h5>
         <div class="card-body">
             <ul class="nav flex-column">
-{{--                @foreach($categories as $cat)--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link" href="{{ route('category',[$cat->id,$cat->slug]) }}">{{$cat->title}}</a>--}}
-{{--                    </li>--}}
-{{--                @endforeach--}}
+                @foreach($categories as $category)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('category', [$category->id, $category->slug] ) }}">{{$category->title}}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>
