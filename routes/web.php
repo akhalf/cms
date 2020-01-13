@@ -30,3 +30,6 @@ Route::resource('comment', 'CommentController');
 
 Route::get('user/{id}', 'ProfileController@getByUser')->name('profile');
 Route::get('user/{id}/comments', 'ProfileController@getCommentsByUser');
+Route::get('settings', 'ProfileController@settings')->name('settings');
+
+Route::post('settings', 'ProfileController@updateProfile')->name('settings');
