@@ -53,7 +53,7 @@
         @else
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="" alt="Avatar" class="avatar">
+                    <img src="{{ asset('storage/avatars/avatar.png') }}" alt="Avatar" class="avatar">
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
 

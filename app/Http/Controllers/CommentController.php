@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public $comment;
+
+    public function __construct(Comment $comment)
+    {
+        $this->comment = $comment;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -35,7 +42,11 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->user()->comments()->create([
+            'body' => $request->body,
+            'post_id' => $request->post_id,
+        ]);
+        return back();
     }
 
     /**

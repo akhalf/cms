@@ -29,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer(['partials.sidebar', 'lists.categories'], \App\ViewComposers\CategoryComposer::class);
         View::composer('lists.roles', \App\ViewComposers\RolesComposer::class);
+        View::composer('partials.sidebar', \App\ViewComposers\CommentComposer::class);
     }
 }

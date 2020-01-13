@@ -17,10 +17,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('{id}-{slug}', 'postController@getByCategory')->name('category');
+Route::get('{id}-{slug}', 'postController@getByCategory')->name('category')->where('id', '[0-9]+');
 
 
 Route::resource('post', 'PostController')->except(['index']);
 
 
 Route::post('search','PostController@search')->name('search');
+
+Route::resource('comment', 'CommentController');
+
+
+Route::get('user/{id}', 'ProfileController@getByUser')->name('profile');
+Route::get('user/{id}/comments', 'ProfileController@getCommentsByUser');
