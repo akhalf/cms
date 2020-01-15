@@ -31,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer('lists.roles', \App\ViewComposers\RolesComposer::class);
         View::composer('partials.sidebar', \App\ViewComposers\CommentComposer::class);
         View::composer('partials.navbar', \App\ViewComposers\PagesComposer::class);
+
+        \Blade::if('admin', function (){
+            return auth()->check() && auth()->user()->isAdmin();
+        });
     }
 }

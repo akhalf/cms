@@ -13,7 +13,7 @@
 
 Route::get('/', 'PostController@index');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -21,7 +21,7 @@ Route::get('{id}-{slug}', 'postController@getByCategory')->name('category')->whe
 
 
 //Route::resource('post', 'PostController')->except(['index']);
-Route::resource('post', 'PostController');
+Route::resource('post', 'PostController')->middleware('verified');
 
 
 Route::post('search','PostController@search')->name('search');
@@ -36,9 +36,9 @@ Route::get('settings', 'ProfileController@settings')->name('settings');
 Route::post('settings', 'ProfileController@updateProfile')->name('settings');
 
 
-Route::get('dashboard',['as' => 'dashboard', 'uses' => 'Admin\DashboardController@index']);
+Route::get('dashboard',['as' => 'dashboard', 'uses' => 'Admin\DashboardController@index'])->middleware('Admin');
 
-Route::group(['prefix' => 'admin'], function (){
+Route::group(['prefix' => 'admin', 'middleware' => 'Admin'], function (){
     Route::resource('posts', 'admin\PostController');
     Route::get('permission', 'admin\PermissionController@index')->name('permissions');
     Route::post('permission', 'admin\RoleController@store')->name('permissions');

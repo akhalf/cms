@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -55,5 +55,21 @@ class User extends Authenticatable
     public function permission()
     {
         return $this->hasOne(Permission::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->id ==1;
+    }
+
+    public function hasAllow($permission)
+    {
+        $role = $this->role()->first();
+        return $role->permissions()->whereName($permission)->first() ? true : false;
     }
 }

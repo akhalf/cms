@@ -60,8 +60,10 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right  text-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href=""><i class="fas fa-cog fa-fw"></i>لوحة التحكم</a>
-                    <a class="dropdown-item" href=""><i class="far fa-user fa-fw"></i>{{__('navbar.Profile')}}</a>
+                    @admin
+                        <a class="dropdown-item" href="{{ route('dashboard') }}"><i class="fas fa-cog fa-fw"></i>لوحة التحكم</a>
+                    @endadmin
+                    <a class="dropdown-item" href="{{ route('profile', auth()->id()) }}"><i class="far fa-user fa-fw"></i>{{__('navbar.Profile')}}</a>
                     <a class="dropdown-item" href="{{ route('settings') }}"><i class="fas fa-cog fa-fw"></i>{{__('navbar.Settings')}}</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href=""

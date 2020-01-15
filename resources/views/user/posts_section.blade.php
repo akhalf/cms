@@ -12,8 +12,12 @@
                     <span>المزيد</span>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="">تعديل</a>
-                    <a class="dropdown-item" href="">حذف</a>
+                    @can('edit-post', $post)
+                        <a class="dropdown-item" href="{{ route('post.edit', $post->id) }}">تعديل</a>
+                    @endcan
+                    @can('delete-post', $post)
+                        <a class="dropdown-item" href="{{ route('post.destroy', $post->id) }}">حذف</a>
+                    @endcan
                 </div>
             </div>
         </div>

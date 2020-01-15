@@ -4,13 +4,13 @@
 <div class="container text-muted">
     <div class="row bg-white p-3 mb-4">
         <div class="col-md-3 text-center">
-            <img class="profile mb-2" src="{{ $contents->profile->avatar }}">
+            <img class="profile mb-2" src="{{ optional($contents->profile)->avatar }}">
         </div>
 
         <div class="col-md-9 text-md-right text-center">
             <h2>{{ $contents->name }}</h2>
-            <p class="text-wrap">{{ $contents->profile->bio }}</p>
-            <a href="">{{ $contents->profile->website }}</a>
+            <p class="text-wrap">{{ optional($contents->profile)->bio }}</p>
+            <a href="">{{ optional($contents->profile)->website }}</a>
         </div>
     </div>
 

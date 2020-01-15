@@ -80,6 +80,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_unless( (auth()->user()->can('edit-post', $post)),403);
+
         return view('post.edit', compact('post'));
     }
 
