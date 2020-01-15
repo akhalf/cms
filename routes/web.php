@@ -43,6 +43,9 @@ Route::group(['prefix' => 'admin'], function (){
     Route::get('permission', 'admin\PermissionController@index')->name('permissions');
     Route::post('permission', 'admin\RoleController@store')->name('permissions');
     Route::post('permission/by_role', 'admin\RoleController@getByRole')->name('permission_byRole');
+
+    Route::resource('page', 'admin\PageController');
+
 });
 
 

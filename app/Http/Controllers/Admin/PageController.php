@@ -1,12 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
+
 class PageController extends Controller
 {
+    public $page;
+
+    public function __construct(Page $page)
+    {
+        $this->page = $page;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +33,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.create');
     }
 
     /**
@@ -35,7 +44,9 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->page->create($request->all());
+
+        return back()->with(['success' => 'تم حفظ البيانات']);
     }
 
     /**
@@ -44,9 +55,10 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show($slug)
     {
-        //
+        $page = $this->page->whereSlug($slug)->first();
+        return view('admin.pages.show', compact('page'));
     }
 
     /**
