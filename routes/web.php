@@ -20,7 +20,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('{id}-{slug}', 'postController@getByCategory')->name('category')->where('id', '[0-9]+');
 
 
-Route::resource('post', 'PostController')->except(['index']);
+//Route::resource('post', 'PostController')->except(['index']);
+Route::resource('post', 'PostController');
 
 
 Route::post('search','PostController@search')->name('search');
@@ -33,3 +34,15 @@ Route::get('user/{id}/comments', 'ProfileController@getCommentsByUser');
 Route::get('settings', 'ProfileController@settings')->name('settings');
 
 Route::post('settings', 'ProfileController@updateProfile')->name('settings');
+
+
+Route::get('dashboard',['as' => 'dashboard', 'uses' => 'Admin\DashboardController@index']);
+
+Route::group(['prefix' => 'admin'], function (){
+    Route::resource('posts', 'admin\PostController');
+    Route::get('permission', 'admin\PermissionController@index')->name('permissions');
+    Route::post('permission', 'admin\RoleController@store')->name('permissions');
+    Route::post('permission/by_role', 'admin\RoleController@getByRole')->name('permission_byRole');
+});
+
+

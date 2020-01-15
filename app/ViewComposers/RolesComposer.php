@@ -16,7 +16,7 @@ class RolesComposer
 
     public function compose(View $view)
     {
-        return $view->with('lists.roles', $this->roles->all());
+        return $view->with('roles', $this->roles->all());
     }
 
 }
